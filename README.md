@@ -68,13 +68,27 @@ A classificação segue os seguintes critérios:
 ## 📁 Estrutura do Projeto
 
 ```text
-Sistema-Classificacao-Escolar/
+sistema-classificacao-escolar/
 │
-├── class_aluno.js
-├── interface.js
+├── src/
+│   ├── models/
+│   │   └── Aluno.js
+│   │
+│   ├── services/
+│   │   └── ClassificacaoService.js
+│   │
+│   ├── interfaces/
+│   │   └── InterfaceTerminal.js
+│   │
+│   └── index.js
+│
+├── tests/
+│   └── Aluno.test.js
+│
+│
+├── .gitignore
 ├── package.json
 ├── package-lock.json
-├── .gitignore
 └── README.md
 ```
 
