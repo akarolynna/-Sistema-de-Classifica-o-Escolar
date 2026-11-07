@@ -1,4 +1,4 @@
- class Aluno {
+class Aluno {
     matricula;
     nome;
     notaProva1;
@@ -33,9 +33,8 @@
         dados += `Nome: ${this.nome}\n`;
         return dados;
     }
-
-
 }
+
 module.exports = Aluno;
 
 
