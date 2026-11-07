@@ -115,7 +115,7 @@ npm install prompt-sync
 **4. Execute a aplicação**
 
 ```bash
-node interface.js
+node index.js
 ```
 
 ## 🌱 Próximos Passos
