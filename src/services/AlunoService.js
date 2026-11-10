@@ -1,8 +1,8 @@
 class AlunoService {
-    alunosDaSala = [];
+ 
 
-    cadastrarAluno(novoAluno) {
-        this.alunosDaSala.push(novoAluno);
+    cadastrarAluno(turma, novoAluno) {
+       turma.cadastrarAluno(novoAluno);
     }
 
 }
