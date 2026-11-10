@@ -1,5 +1,5 @@
-const interfaceTerminal = require('./interfaces/interface');
+const view_principal = require('./view/ViewPrincipal');
 
 
 
-interfaceTerminal.iniciar();
+view_principal.iniciar();

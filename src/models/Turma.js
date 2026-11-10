@@ -5,6 +5,13 @@ class Turma{
 
     constructor(pNome, pAnoLetivo){
         this.#nome = pNome;
+        this.anoLetivo = pAnoLetivo;
+    }
+
+    set anoLetivo(pAnoLetivo){
+        if(!Number.isFinite(pAnoLetivo) ||(pAnoLetivo < 1990 ) || (pAnoLetivo > new Date().getFullYear())){
+             throw new Error("Digite um ano letivo válido!");
+        }
         this.#anoLetivo = pAnoLetivo;
     }
 

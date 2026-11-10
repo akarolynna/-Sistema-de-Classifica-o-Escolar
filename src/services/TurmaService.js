@@ -1,4 +1,4 @@
-class AlunoService {
+class TurmaService {
  
 
     cadastrarAluno(turma, novoAluno) {
@@ -7,4 +7,4 @@ class AlunoService {
 
 }
 
-module.exports = AlunoService;
+module.exports = TurmaService;
