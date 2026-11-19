@@ -1,39 +1,68 @@
-
-const Turma = require('../models/Turma.js');
-const Aluno = require('../models/Aluno.js');
-
 const prompt = require('prompt-sync')();
 
 const TurmaService = require('../services/TurmaService.js');
 
-const { pedirDadosTurma } = require('./ViewTurma.js');
-const { pedirDadosAlunos } = require('./ViewAlunos.js');
+const { criarTurma } = require('./ViewTurma.js');
+const { cadastrarVariosAlunosNaTurmas } = require('./ViewAlunos.js');
 
+const turmaService = new TurmaService();
 
+function exibirMenu() {
+    console.log(`
+    ===== SISTEMA DE CLASSIFICAÇÃO ESCOLAR =====
+
+    1 - Cadastrar turma
+    2 - Listar turmas
+    3 - Cadastrar aluno em uma turma
+    4 - Consultar alunos de uma turma
+    0 - Sair
+    `);
+}
 
 function iniciar() {
+    let opcao;
+    do {
+        exibirMenu();
+        opcao = parseInt(prompt("Qual a opção desejada: "));
+        switch (opcao) {
+            case 1:
+                console.log("\nIniciando cadastro...");
+                const turma = criarTurma(turmaService);
 
-    const turmaService = new TurmaService();
+                if (turma) { // se deu tudo certo no cadastro da turma
+                    oferecerCadastroAlunos(turma);
+                }
+                break;
 
-    try {
-        const dadosTurma = pedirDadosTurma();
-        const turma = new Turma(dadosTurma.nome, dadosTurma.anoLetivo);
-        let qtdAlunos = parseInt(prompt("Informe quantos alunos tem em sua sala: "));
+            case 2:
+                break;
 
+            case 3:
 
-        for (let i = 0; i < qtdAlunos; i++) {
-            try {
-                const dadosAluno = pedirDadosAlunos();
-                const novoAluno = new Aluno(dadosAluno.matricula, dadosAluno.nome, dadosAluno.notaProva1, dadosAluno.notaProva2, dadosAluno.notaTrabalho);
-                turmaService.cadastrarAluno(turma, novoAluno);
-            } catch (error) {
-                console.log(`Erro ao cadastrar aluno: ${error.message}`);
-                i--;
-            }
+                break;
+
+            case 4:
+                break;
+
+            case 0:
+                console.log("Encerrando sistema...");
+                break;
+
+            default:
+                console.log("Opção inválida!");
+                break;
         }
-    } catch (error) {
-        console.log(`Erro ao cadastrar turma: ${error.message}`);
+    } while (opcao !== 0);
+}
+
+function oferecerCadastroAlunos(turma) {
+    let resposta = prompt("Deseja cadastrar alunos nesta turma(Sim ou Não): ").trim().toUpperCase();
+
+    if (resposta == "SIM") {
+        console.log("\nIniciando cadastro...");
+        cadastrarVariosAlunosNaTurmas(turma, turmaService);
     }
 }
+
 
 module.exports = { iniciar };
