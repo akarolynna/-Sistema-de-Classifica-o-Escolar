@@ -7,7 +7,7 @@ function pedirDadosTurma() {
 
     let turmaInformacoes = prompt("Digite os dados da turma ( Nome | Ano Letivo): ").split('|');
     let turmaNome = turmaInformacoes[0];
-    let turmaAnoLetivo = parseInt(turmaInformacoes[1]);
+    let turmaAnoLetivo = Number(turmaInformacoes[1]);
 
     return {
         nome: turmaNome,
@@ -51,13 +51,12 @@ function listarTurmas(turmaService) {
                 border: ['magenta']
             }
         });
-        
+
         turmas.forEach(turma => { tabela.push([turma.id, turma.nome, turma.anoLetivo]); });
         console.log(tabela.toString());
 
     } catch (error) {
         console.log(`Erro ao listar turmas: ${error.message}`);
-        return null;
     }
 }
 

@@ -3,7 +3,7 @@ const chalk = require('chalk'); // Isso vai permitir nosso terminal ficar mais b
 
 const TurmaService = require('../services/TurmaService.js');
 const { criarTurma, listarTurmas } = require('./ViewTurma.js');
-const { cadastrarVariosAlunosNaTurmas } = require('./ViewAlunos.js');
+const { cadastrarVariosAlunosNaTurmas, listarAlunosPorTurma } = require('./ViewAlunos.js');
 
 const turmaService = new TurmaService();
 
@@ -27,30 +27,44 @@ function iniciar() {
         opcao = parseInt(prompt("Qual a opção desejada:"));
 
         switch (opcao) {
-            case 1:
+            case 1: {
                 process.stdout.write('\x1Bc');
                 console.log(`${chalk.magenta("\n✚ CADASTRAR TURMA")}`);
                 const turma = criarTurma(turmaService);
-              
-                if (turma) { // se deu tudo certo no cadastro da turma
-                    oferecerCadastroAlunos(turma);
-                }
-                
-                break;
 
-            case 2:
+                //  if (turma) { // se deu tudo certo no cadastro da turma
+                //   oferecerCadastroAlunos(turma);
+                //    }
+
+                break;
+            }
+            case 2: {
                 process.stdout.write('\x1Bc');
                 console.log(`${chalk.magenta("\n✚ LISTANDO TURMAS")}`);
                 listarTurmas(turmaService);
-                break;
-
-            case 3:
 
                 break;
+            }
+            case 3: {
+                process.stdout.write('\x1Bc');
+                const turmaSelecionada = selecionarTurma()
+                if (turmaSelecionada) { // se turmaSelecionada for diferente de nulo
+                    cadastrarVariosAlunosNaTurmas(turmaSelecionada, turmaService);
+                }
 
-            case 4:
                 break;
+            }
 
+            case 4: {
+                process.stdout.write('\x1Bc');
+                const turmaSelecionada = selecionarTurma()
+                if (turmaSelecionada) {
+                    listarAlunosPorTurma(turmaSelecionada);
+                }
+
+
+                break;
+            }
             case 0:
                 console.log("Encerrando sistema...");
                 break;
@@ -75,5 +89,17 @@ function oferecerCadastroAlunos(turma) {
     }
 }
 
+function selecionarTurma() {
+    listarTurmas(turmaService);
+
+    const id = parseInt(prompt("Informe o ID da Turma:"));
+    const turma = turmaService.buscarTurmaPorId(id);
+
+    if (!turma) {
+        console.log("Turma não encontrada!");
+        return null;
+    }
+    return turma;
+}
 
 module.exports = { iniciar };

@@ -1,6 +1,6 @@
 const Aluno = require('../models/Aluno.js');
 const prompt = require('prompt-sync')();
-
+const Table = require('cli-table3');
 function pedirDadosAlunos() {
        let resposta = prompt("Digite os dados do aluno (Matricula | Nome | P1 | P2 | Trabalho): ").split('|');
        let alunoMatricula = resposta[0];
@@ -30,7 +30,7 @@ function cadastrarAluno(turma, turmaService) {
        }
 }
 
-function cadastrarVariosAlunosNaTurmas(turma, turmaService) {
+function cadastrarVariosAlunosNaTurmas(turmaSelecionada, turmaService) {
        let qtdAlunos = Number(prompt("Informe quantos alunos tem em sua sala: "));
 
        if (!Number.isInteger(qtdAlunos) || qtdAlunos <= 0) {
@@ -39,13 +39,36 @@ function cadastrarVariosAlunosNaTurmas(turma, turmaService) {
        }
 
        for (let i = 0; i < qtdAlunos; i++) {
-              const cadastrandoAlunos = cadastrarAluno(turma, turmaService);
+              const cadastrandoAlunos = cadastrarAluno(turmaSelecionada, turmaService);
               if (!cadastrandoAlunos) {
                      i--;
               }
        }
 }
+function listarAlunosPorTurma(turmaSelecionada) {
+       try {
+              const alunos = turmaSelecionada.alunosDaSala;
+              if (alunos.length === 0) {
+                     throw new Error("Nenhum aluno cadastrado nesta turma!");
+              }
 
-module.exports = { pedirDadosAlunos, cadastrarAluno, cadastrarVariosAlunosNaTurmas };
+              const tabela = new Table({
+                     head: ['MATRÍCULA', 'NOME', 'NOTA PROVA 1', 'NOTA PROVA 2', 'NOTA TRABALHO'], //DEPOIS MUDAR PARA EXIBIR A MÉDIA E O STATUS DO ALUNO, APROVADO OU REPROVADO HEHEHE, VAI FICAR MAIS BONITO
+                     colWidths: [15, 35, 15, 15, 17],
+                     wordWrap: true,
+                     style: {
+                            head: ['magenta'],
+                            border: ['magenta']
+                     }
+              });
+              alunos.forEach(aluno => { tabela.push([aluno.matricula, aluno.nome, aluno.notaProva1, aluno.notaProva2, aluno.notaTrabalho]); });
+              console.log(tabela.toString());
+       } catch (error) {
+               console.log(`Erro ao listar alunos: ${error.message}`);
+
+       }
+}
+
+module.exports = { pedirDadosAlunos, cadastrarAluno, cadastrarVariosAlunosNaTurmas,listarAlunosPorTurma };
 
 
