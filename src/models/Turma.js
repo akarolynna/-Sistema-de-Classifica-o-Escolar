@@ -15,7 +15,7 @@ class Turma {
 
     set anoLetivo(pAnoLetivo) {
         if (!Number.isInteger(pAnoLetivo) || (pAnoLetivo < 1990) || (pAnoLetivo > new Date().getFullYear())) {
-            throw new Error("Digite um ano letivo válido!");
+            throw new Error("Erro! Ano letivo inválido. Tente novamente!\n");
         }
         this.#anoLetivo = pAnoLetivo;
     }

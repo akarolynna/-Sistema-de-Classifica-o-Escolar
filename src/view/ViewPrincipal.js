@@ -1,40 +1,47 @@
 const prompt = require('prompt-sync')();
+const chalk = require('chalk'); // Isso vai permitir nosso terminal ficar mais bonitinho
 
 const TurmaService = require('../services/TurmaService.js');
-
-const { criarTurma } = require('./ViewTurma.js');
+const { criarTurma, listarTurmas } = require('./ViewTurma.js');
 const { cadastrarVariosAlunosNaTurmas } = require('./ViewAlunos.js');
 
 const turmaService = new TurmaService();
 
 function exibirMenu() {
-    console.log(`
-    ===== SISTEMA DE CLASSIFICAÇÃO ESCOLAR =====
-
-    1 - Cadastrar turma
-    2 - Listar turmas
-    3 - Cadastrar aluno em uma turma
-    4 - Consultar alunos de uma turma
-    0 - Sair
-    `);
+    console.log(`  ${chalk.magenta.bold("======== SISTEMA DE CLASSIFICAÇÃO ESCOLAR ========")}
+    ${chalk.white("1 - Cadastrar turma  ")}                      
+    ${chalk.white("2 - Listar turmas  ")}                               
+    ${chalk.white("3 - Cadastrar aluno em uma turma")}             
+    ${chalk.white("4 - Consultar alunos de uma turma")}           
+    ${chalk.white("0 - Sair   ")}                                     
+    ${chalk.magenta.bold("================================================")}`);
 }
+
+
 
 function iniciar() {
     let opcao;
     do {
+        process.stdout.write('\x1Bc'); // LIMPA O TERMINAL COMO O CLS
         exibirMenu();
-        opcao = parseInt(prompt("Qual a opção desejada: "));
+        opcao = parseInt(prompt("Qual a opção desejada:"));
+
         switch (opcao) {
             case 1:
-                console.log("\nIniciando cadastro...");
+                process.stdout.write('\x1Bc');
+                console.log(`${chalk.magenta("\n✚ CADASTRAR TURMA")}`);
                 const turma = criarTurma(turmaService);
-
+              
                 if (turma) { // se deu tudo certo no cadastro da turma
                     oferecerCadastroAlunos(turma);
                 }
+                
                 break;
 
             case 2:
+                process.stdout.write('\x1Bc');
+                console.log(`${chalk.magenta("\n✚ LISTANDO TURMAS")}`);
+                listarTurmas(turmaService);
                 break;
 
             case 3:
@@ -51,6 +58,10 @@ function iniciar() {
             default:
                 console.log("Opção inválida!");
                 break;
+        }
+
+        if (opcao !== 0) {
+            prompt(chalk.magenta.bold("\nPressione ENTER para voltar ao menu..."));
         }
     } while (opcao !== 0);
 }
