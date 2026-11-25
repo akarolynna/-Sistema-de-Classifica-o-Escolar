@@ -6,11 +6,51 @@ class Aluno {
     #notaTrabalho;
 
     constructor(pMatricula, pNome, pNotaProva1, pNotaProva2, pNotaTrabalho) {
-        this.#matricula = pMatricula;
-        this.#nome = pNome;
+        this.matricula = pMatricula;
+        this.nome = pNome;
         this.notaProva1 = pNotaProva1;
         this.notaProva2 = pNotaProva2;
         this.notaTrabalho = pNotaTrabalho;
+    }
+
+    get matricula() {
+        return this.#matricula;
+    }
+    get nome() {
+        return this.#nome;
+    }
+    get notaProva1() {
+        return this.#notaProva1;
+    }
+    get notaProva2() {
+        return this.#notaProva2;
+    }
+    get notaTrabalho() {
+        return this.#notaTrabalho;
+    }
+
+    set matricula(pMatricula){
+        // if( pMatricula.length !== 12 || typeof pMatricula !== "string" || pMatricula.trim() ===""){
+        /*
+        ^: Lê o início da string
+        [0-9]: Permite apenas números de 0 a 9
+        {12}: Exige exatamente 12 dígitos
+        $: Final da string
+        .test(): verifica se o valor corresponde ao padrão | é um método padrão nativo do JS.
+        !: nega o resultado da validação. 
+        */
+
+        if (typeof pMatricula !== "string" || !/^[0-9]{12}$/.test(pMatricula)) { 
+            throw new Error("Erro! Matricula inválida.");
+        }
+        this.#matricula = pMatricula;
+    }
+
+    set nome(pNome) {
+        if (typeof pNome !== "string" || pNome.trim() === "") {
+            throw new Error("Erro! Nome do aluno inválido.");
+        }
+        this.#nome = pNome;
     }
 
     set notaProva1(pNotaProva1) {
@@ -35,22 +75,6 @@ class Aluno {
 
         }
         this.#notaTrabalho = pNotaTrabalho;
-    }
-
-    get matricula() {
-        return this.#matricula;
-    }
-    get nome() {
-        return this.#nome;
-    }
-    get notaProva1() {
-        return this.#notaProva1;
-    }
-    get notaProva2() {
-        return this.#notaProva2;
-    }
-    get notaTrabalho() {
-        return this.#notaTrabalho;
     }
 
 
