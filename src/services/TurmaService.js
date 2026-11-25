@@ -6,11 +6,20 @@ class TurmaService {
         return [...this.#turmas];
     }
 
-    cadastrarTurma(turma) {
-        this.#turmas.push(turma);
+    cadastrarTurma(novaTurma) {
+        const turmaExiste = this.#turmas.some(
+            turma => turma.nome.trim().toUpperCase() === novaTurma.nome.trim().toUpperCase() 
+            && 
+            turma.anoLetivo === novaTurma.anoLetivo);
+
+            if(turmaExiste === true){
+                  throw new Error("Erro! Turma já se encontra cadastrada.");
+            }
+        
+        this.#turmas.push(novaTurma);
     }
 
-    cadastrarAluno(turma, novoAluno) {
+    cadastrarAluno(turma, novoAluno) {  
         turma.cadastrarAluno(novoAluno);
     }
 

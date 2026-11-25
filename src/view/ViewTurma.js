@@ -20,12 +20,12 @@ function criarTurma(turmaService) {
     while (true) {
         try {
             const dadosTurma = pedirDadosTurma();
-            const turma = new Turma(dadosTurma.nome, dadosTurma.anoLetivo);
-            turmaService.cadastrarTurma(turma);
+            const novaTurma = new Turma(dadosTurma.nome, dadosTurma.anoLetivo);
+            turmaService.cadastrarTurma(novaTurma);
             // console.log(chalk.bgGreen("Turma cadastrada com sucesso!\n")); //melhorar futuramente para ago mais robusto
             console.log(chalk.green('│ ✓ Turma cadastrada com sucesso! \n'));
 
-            return turma;
+            return novaTurma;
         } catch (error) {
             console.log(`${chalk.bgRed(error.message)}`);
 

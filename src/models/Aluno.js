@@ -77,13 +77,11 @@ class Aluno {
         this.#notaTrabalho = pNotaTrabalho;
     }
 
-
-
-
     calcularMedia() {
         let media = ((this.#notaProva1 * 2.5) + (this.#notaProva2 * 2.5) + (this.#notaTrabalho * 1)) / (1 + 2.5 + 2.5);
         return media;
     }
+    
     notaParaProvaFinal() {
         let media = this.calcularMedia();
         let notaNecessariaVS = 0;

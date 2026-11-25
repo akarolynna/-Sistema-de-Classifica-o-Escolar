@@ -31,7 +31,6 @@ function iniciar() {
                 process.stdout.write('\x1Bc');
                 console.log(`${chalk.magenta("\n✚ CADASTRAR TURMA")}`);
                 const turma = criarTurma(turmaService);
-
                 //  if (turma) { // se deu tudo certo no cadastro da turma
                 //   oferecerCadastroAlunos(turma);
                 //    }

@@ -8,7 +8,6 @@ class Turma {
     constructor(pNome, pAnoLetivo) {
         this.nome = pNome;
         this.anoLetivo = pAnoLetivo;
-
         this.#id = Turma.#proximoId; //O #id pertence a cada turma individualmente, enquanto #proximoId pertence à classe Turma.
         Turma.#proximoId++;
     }
@@ -29,20 +28,26 @@ class Turma {
         return this.#id;
     }
 
-    set nome(pNome){
-        if(typeof pNome !=="string" || pNome.trim()===""){
+    set nome(pNome) {
+        if (typeof pNome !== "string" || pNome.trim() === "") {
             throw new Error("Erro! Nome da turma inválido.");
         }
         this.#nome = pNome;
     }
     set anoLetivo(pAnoLetivo) {
         if (!Number.isInteger(pAnoLetivo) || (pAnoLetivo < 1990) || (pAnoLetivo > new Date().getFullYear())) {
-            throw new Error("Erro! Ano letivo inválido. Tente novamente!\n");
+            throw new Error(`Ano letivo inválido! Informe um número inteiro entre 1990 e ${new Date().getFullYear()}.\n`);
         }
         this.#anoLetivo = pAnoLetivo;
     }
 
     cadastrarAluno(novoAluno) {
+        const matriculaExiste = this.#alunosDaSala.some(
+            aluno => aluno.matricula === novoAluno.matricula);
+
+        if (matriculaExistente == true) {
+            throw new Error("Erro! Matrícula já se encontra cadastrada.");
+        }
         this.#alunosDaSala.push(novoAluno);
     }
 
