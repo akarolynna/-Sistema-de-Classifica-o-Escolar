@@ -48,7 +48,7 @@ class Aluno {
 
     set nome(pNome) {
         if (typeof pNome !== "string" || pNome.trim() === "") {
-            throw new Error("Erro! Nome do aluno inválido.");
+            throw new Error(" Nome do aluno inválido.");
         }
         this.#nome = pNome;
     }

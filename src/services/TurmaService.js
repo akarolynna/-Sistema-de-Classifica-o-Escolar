@@ -8,27 +8,27 @@ class TurmaService {
 
     cadastrarTurma(novaTurma) {
         const turmaExiste = this.#turmas.some(
-            turma => turma.nome.trim().toUpperCase() === novaTurma.nome.trim().toUpperCase() 
-            && 
-            turma.anoLetivo === novaTurma.anoLetivo);
+            turma => turma.nome.trim().toUpperCase() === novaTurma.nome.trim().toUpperCase()
+                &&
+                turma.anoLetivo === novaTurma.anoLetivo);
 
-            if(turmaExiste === true){
-                  throw new Error("Erro! Turma já se encontra cadastrada.");
-            }
-        
+        if (turmaExiste === true) {
+            throw new Error("Erro! Turma já se encontra cadastrada.");
+        }
+
         this.#turmas.push(novaTurma);
     }
 
-    cadastrarAluno(turma, novoAluno) {  
+    cadastrarAluno(turma, novoAluno) {
         turma.cadastrarAluno(novoAluno);
     }
 
-    buscarTurmaPorId(id){
-        return this.#turmas.find(turma=> turma.id ===id); //find() procura o primeiro elemento que satisfaça uma condição. BASICAMENTE é:array.find(elemento => condição);
+    buscarTurmaPorId(id) {
+        return this.#turmas.find(turma => turma.id === id); //find() procura o primeiro elemento que satisfaça uma condição. BASICAMENTE é:array.find(elemento => condição);
         // então aqui ele busca a turma em que possui o id que o usuario informou
     }
 
-    
+
 }
 
 module.exports = TurmaService;

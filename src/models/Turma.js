@@ -30,10 +30,11 @@ class Turma {
 
     set nome(pNome) {
         if (typeof pNome !== "string" || pNome.trim() === "") {
-            throw new Error("Erro! Nome da turma inválido.");
+            throw new Error("Nome da turma inválido.");
         }
         this.#nome = pNome;
     }
+
     set anoLetivo(pAnoLetivo) {
         if (!Number.isInteger(pAnoLetivo) || (pAnoLetivo < 1990) || (pAnoLetivo > new Date().getFullYear())) {
             throw new Error(`Ano letivo inválido! Informe um número inteiro entre 1990 e ${new Date().getFullYear()}.\n`);
@@ -46,12 +47,10 @@ class Turma {
             aluno => aluno.matricula === novoAluno.matricula);
 
         if (matriculaExiste == true) {
-            throw new Error("Erro! Matrícula já se encontra cadastrada.");
+            throw new Error("Matrícula já se encontra cadastrada.");
         }
         this.#alunosDaSala.push(novoAluno);
     }
-
-
 
 }
 module.exports = Turma;

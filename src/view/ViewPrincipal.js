@@ -1,3 +1,4 @@
+const { setTimeout } = require('node:timers/promises');
 const prompt = require('prompt-sync')();
 const chalk = require('chalk'); // Isso vai permitir nosso terminal ficar mais bonitinho
 
@@ -19,7 +20,7 @@ function exibirMenu() {
 
 
 
-function iniciar() {
+async function iniciar() {
     let opcao;
     do {
         process.stdout.write('\x1Bc'); // LIMPA O TERMINAL COMO O CLS
@@ -31,10 +32,11 @@ function iniciar() {
                 process.stdout.write('\x1Bc');
                 console.log(`${chalk.magenta("\n✚ CADASTRAR TURMA")}`);
                 const turma = criarTurma(turmaService);
-                 if (turma) { // se deu tudo certo no cadastro da turma
-                  oferecerCadastroAlunos(turma);
-                   }
 
+                //  if (turma) { // se deu tudo certo no cadastro da turma
+                //   oferecerCadastroAlunos(turma);
+                //    }
+                await setTimeout(2000);
                 break;
             }
 
@@ -52,7 +54,7 @@ function iniciar() {
                 if (turmaSelecionada) { // se turmaSelecionada for diferente de nulo
                     cadastrarVariosAlunosNaTurmas(turmaSelecionada, turmaService);
                 }
-
+                await setTimeout(1000);
                 break;
             }
 
@@ -67,14 +69,16 @@ function iniciar() {
 
             case 0:
                 console.log(`${chalk.magenta("\nEncerrando sistema...")}`);
+                await setTimeout(1000);
                 break;
 
             default:
-                console.log(`${chalk.bgYellow.black("Opção inválida!")}`)
+                console.log(`${chalk.bgYellow.black("Opção inválida!")}`);
+                await setTimeout(1000);
                 break;
         }
 
-        if (opcao !== 0) {
+        if (opcao == 2 || opcao == 4) {
             prompt(chalk.magenta.bold("\nPressione ENTER para voltar ao menu..."));
         }
     } while (opcao !== 0);
@@ -91,12 +95,12 @@ function oferecerCadastroAlunos(turma) {
 
 function selecionarTurma() {
     listarTurmas(turmaService);
-     console.log(`${chalk.yellow("Caso deseje sair aperte ENTER ou digite 0!\n")}`);
+    console.log(`${chalk.yellow("Caso deseje sair aperte ENTER ou digite 0!\n")}`);
     while (true) {
         try {
-           
+
             const resposta = prompt("Informe o ID da Turma:").trim();
-            if(resposta === "0" || resposta===""){
+            if (resposta === "0" || resposta === "") {
                 return false;
             }
 

@@ -1,13 +1,24 @@
 const Aluno = require('../models/Aluno.js');
+
 const prompt = require('prompt-sync')();
 const Table = require('cli-table3');
+const chalk = require('chalk');
+
 function pedirDadosAlunos() {
+
        let resposta = prompt("Digite os dados do aluno (Matricula | Nome | P1 | P2 | Trabalho): ").split('|');
+       if (resposta.length !== 5) {
+              throw new Error("Informe exatamente os cinco campos solicitados.\n");
+       }
+
+
+
        let alunoMatricula = resposta[0];
        let alunoNome = resposta[1];
-       let alunoP1 = parseFloat(resposta[2]);
-       let alunoP2 = parseFloat(resposta[3]);
-       let alunoNotaTrabalho = parseFloat(resposta[4]);
+
+       let alunoP1 = Number(resposta[2]);
+       let alunoP2 = Number(resposta[3]);
+       let alunoNotaTrabalho = Number(resposta[4]);
 
        return {
               matricula: alunoMatricula,
@@ -15,8 +26,9 @@ function pedirDadosAlunos() {
               notaProva1: alunoP1,
               notaProva2: alunoP2,
               notaTrabalho: alunoNotaTrabalho
-       };
-}
+       }
+};
+
 function cadastrarAluno(turma, turmaService) {
        // console.log("Iniciando cadastro...");
        try {
@@ -25,8 +37,9 @@ function cadastrarAluno(turma, turmaService) {
               turmaService.cadastrarAluno(turma, novoAluno);
               return true;
        } catch (error) {
-            
-              throw new Error(`Erro ao cadastrar aluno: ${error.message}`);
+              console.log(chalk.bgRed(`Erro ao cadastrar aluno! ${error.message}`));
+
+
               return false;
        }
 }
@@ -65,11 +78,11 @@ function listarAlunosPorTurma(turmaSelecionada) {
               alunos.forEach(aluno => { tabela.push([aluno.matricula, aluno.nome, aluno.notaProva1, aluno.notaProva2, aluno.notaTrabalho]); });
               console.log(tabela.toString());
        } catch (error) {
-               console.log(`Erro ao listar alunos: ${error.message}`);
+              console.log(`Erro ao listar alunos: ${error.message}`);
 
        }
 }
 
-module.exports = { pedirDadosAlunos, cadastrarAluno, cadastrarVariosAlunosNaTurmas,listarAlunosPorTurma };
+module.exports = { pedirDadosAlunos, cadastrarAluno, cadastrarVariosAlunosNaTurmas, listarAlunosPorTurma };
 
 

@@ -1,3 +1,4 @@
+
 const Turma = require('../models/Turma.js');
 const prompt = require('prompt-sync')();
 const chalk = require('chalk');
@@ -5,9 +6,13 @@ const Table = require('cli-table3');
 
 function pedirDadosTurma() {
 
-    let turmaInformacoes = prompt("Digite os dados da turma ( Nome | Ano Letivo): ").split('|');
-    let turmaNome = turmaInformacoes[0];
-    let turmaAnoLetivo = Number(turmaInformacoes[1]);
+    let resposta = prompt("Digite os dados da turma ( Nome | Ano Letivo): ").split('|');
+    if (resposta.length !== 2) {
+        throw new Error("Erro! Informe exatamente os dois campos solicitados.\n");
+    }
+
+    let turmaNome = resposta[0];
+    let turmaAnoLetivo = Number(resposta[1]);
 
     return {
         nome: turmaNome,
@@ -24,7 +29,6 @@ function criarTurma(turmaService) {
             turmaService.cadastrarTurma(novaTurma);
             // console.log(chalk.bgGreen("Turma cadastrada com sucesso!\n")); //melhorar futuramente para ago mais robusto
             console.log(chalk.green('│ ✓ Turma cadastrada com sucesso! \n'));
-
             return novaTurma;
         } catch (error) {
             console.log(`${chalk.bgRed(error.message)}`);
