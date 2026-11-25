@@ -31,12 +31,13 @@ function iniciar() {
                 process.stdout.write('\x1Bc');
                 console.log(`${chalk.magenta("\n✚ CADASTRAR TURMA")}`);
                 const turma = criarTurma(turmaService);
-                //  if (turma) { // se deu tudo certo no cadastro da turma
-                //   oferecerCadastroAlunos(turma);
-                //    }
+                 if (turma) { // se deu tudo certo no cadastro da turma
+                  oferecerCadastroAlunos(turma);
+                   }
 
                 break;
             }
+
             case 2: {
                 process.stdout.write('\x1Bc');
                 console.log(`${chalk.magenta("\n✚ LISTANDO TURMAS")}`);
@@ -44,6 +45,7 @@ function iniciar() {
 
                 break;
             }
+
             case 3: {
                 process.stdout.write('\x1Bc');
                 const turmaSelecionada = selecionarTurma()
@@ -60,16 +62,15 @@ function iniciar() {
                 if (turmaSelecionada) {
                     listarAlunosPorTurma(turmaSelecionada);
                 }
-
-
                 break;
             }
+
             case 0:
-                console.log("Encerrando sistema...");
+                console.log(`${chalk.magenta("\nEncerrando sistema...")}`);
                 break;
 
             default:
-                console.log("Opção inválida!");
+                console.log(`${chalk.bgYellow.black("Opção inválida!")}`)
                 break;
         }
 
@@ -90,15 +91,27 @@ function oferecerCadastroAlunos(turma) {
 
 function selecionarTurma() {
     listarTurmas(turmaService);
+     console.log(`${chalk.yellow("Caso deseje sair aperte ENTER ou digite 0!\n")}`);
+    while (true) {
+        try {
+           
+            const resposta = prompt("Informe o ID da Turma:").trim();
+            if(resposta === "0" || resposta===""){
+                return false;
+            }
 
-    const id = parseInt(prompt("Informe o ID da Turma:"));
-    const turma = turmaService.buscarTurmaPorId(id);
+            const id = parseInt(resposta);
+            const turma = turmaService.buscarTurmaPorId(id);
 
-    if (!turma) {
-        console.log("Turma não encontrada!");
-        return null;
+            if (!turma) {
+                throw new Error(`${chalk.bgYellow.black("Turma não encontrada!\n")}`);
+            }
+            return turma;
+        } catch (error) {
+            console.log(error.message);
+        }
     }
-    return turma;
 }
+
 
 module.exports = { iniciar };

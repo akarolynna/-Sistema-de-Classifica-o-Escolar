@@ -45,7 +45,7 @@ class Turma {
         const matriculaExiste = this.#alunosDaSala.some(
             aluno => aluno.matricula === novoAluno.matricula);
 
-        if (matriculaExistente == true) {
+        if (matriculaExiste == true) {
             throw new Error("Erro! Matrícula já se encontra cadastrada.");
         }
         this.#alunosDaSala.push(novoAluno);

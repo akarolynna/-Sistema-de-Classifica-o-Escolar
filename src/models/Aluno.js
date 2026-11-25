@@ -40,7 +40,7 @@ class Aluno {
         !: nega o resultado da validação. 
         */
 
-        if (typeof pMatricula !== "string" || !/^[0-9]{12}$/.test(pMatricula)) { 
+        if (typeof pMatricula !== "string" || !/^[0-9]{12}$/.test(pMatricula.trim()))  { 
             throw new Error("Erro! Matricula inválida.");
         }
         this.#matricula = pMatricula;

@@ -25,7 +25,8 @@ function cadastrarAluno(turma, turmaService) {
               turmaService.cadastrarAluno(turma, novoAluno);
               return true;
        } catch (error) {
-              console.log(`Erro ao cadastrar aluno: ${error.message}`);
+            
+              throw new Error(`Erro ao cadastrar aluno: ${error.message}`);
               return false;
        }
 }
